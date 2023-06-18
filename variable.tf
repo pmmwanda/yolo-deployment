@@ -16,7 +16,7 @@ variable "instances" {
 }
 variable "project_id" {
   type    = string
-  default = ""
+  default = "yolo-client"
 }
 
 variable "organization_developers" {
