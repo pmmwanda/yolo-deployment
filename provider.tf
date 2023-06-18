@@ -8,5 +8,9 @@ terraform {
       source = "kreuzwerker/docker"
       version = "3.0.2"
     }
+    github = {
+      source  = "integrations/github"
+      version = "5.25.1"
+    }
   }
 }

@@ -14,3 +14,12 @@ variable "instances" {
     "ansible-client-two",
   ]
 }
+variable "project_id" {
+  type    = string
+  default = ""
+}
+
+variable "organization_developers" {
+  type    = list(string)
+  default = [""]
+}
