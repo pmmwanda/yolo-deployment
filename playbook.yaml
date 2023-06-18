@@ -1,0 +1,81 @@
+---
+- name: Yolo-client deployment
+  hosts: all
+  become: true
+  vars:
+    client_image: rwambui/yolo-client:1.0.0
+    backend_image: rwambui/yolo-backend:1.0.0
+    app_folder: /opt/yolo
+
+  tasks:
+    - name: update cache
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: clone the repository
+      git:
+        repo: https://github.com/Ruthmwangi26/yolo.git
+        dest: /opt/yolo
+
+    - name: Install npm
+      apt:
+        name: npm
+        state: present
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      tags:
+        - docker
+
+    - name: Install required packages
+      apt:
+        name: 
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+      tags:
+        - docker
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+      tags:
+        - docker
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable"
+        state: present
+      tags:
+        - docker
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+      tags:
+        - docker
+
+    - name: Pull Docker image
+      docker_image:
+        name: nginx:latest
+        source: pull
+      tags:
+        - docker
+
+    - name: Run Docker container
+      docker_container:
+        name: my_nginx
+        image: nginx:latest
+        ports:
+          - "80:80"
+        state: started
+      tags:
+        - docker
