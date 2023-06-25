@@ -1,19 +1,14 @@
----
 - name: Yolo-client deployment
-  hosts: all
+  hosts: gcp_hosts
   become: true
   vars:
+  
     client_image: rwambui/yolo-client:1.0.0
     backend_image: rwambui/yolo-backend:1.0.0
     app_folder: /opt/yolo
 
   tasks:
-    - name: update cache
-      apt:
-        update_cache: yes
-        upgrade: yes
-
-    - name: clone the repository
+    - name: Clone the repository
       git:
         repo: https://github.com/Ruthmwangi26/yolo.git
         dest: /opt/yolo
@@ -23,7 +18,6 @@
         name: npm
         state: present
 
-  tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
@@ -32,12 +26,12 @@
 
     - name: Install required packages
       apt:
-        name: 
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gnupg
-          - lsb-release
+        name:
+            - apt-transport-https
+            - ca-certificates
+            - curl
+            - gnupg
+            - lsb-release
         state: present
       tags:
         - docker
@@ -67,10 +61,8 @@
       service:
         name: docker
         state: started
-     
 
     - name: Run Docker container
       command: docker-compose up -d
       args:
         chdir: /opt/yolo
-        

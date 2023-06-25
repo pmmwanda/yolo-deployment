@@ -3,7 +3,7 @@ locals {
   network          = "default"
   image            = "debian-cloud/debian-11"
   ssh_user         = "ansible"
-  credentials = "${file("credentials.json")}"
+  private_key_path = "/home/reconfigure/.ssh/id_rsa"
 }
 
 provider "google" {
@@ -11,6 +11,7 @@ provider "google" {
   region  = "us-central1"
   zone    = "us-central1-a"
 }
+
 resource "google_service_account" "ansible" {
   account_id = "ansible-admin"
 }
@@ -28,30 +29,36 @@ resource "google_compute_firewall" "web" {
   target_tags   = ["web"]
 }
 
- resource "google_compute_instance" "default" {
-  count      = length(var.instances)
-  name      = var.instances[count.index]
+locals {
+  instance_names = ["ansible-server", "ansible-client-one", "ansible-client-two"]
+}
+
+resource "google_compute_instance" "instances" {
+  for_each = toset(local.instance_names)
+
+  name         = each.key
   machine_type = "e2-medium"
 
   boot_disk {
     initialize_params {
       image = local.image
       labels = {
-        my_lable = "value"
+        my_label = "value"
       }
     }
   }
- 
-#   scratch_disk {
-#     interface = "SCSI"
-#   }
+
+  # scratch_disk {
+  #   interface = "SCSI"
+  # }
+
   network_interface {
-    # A default network is created for all GCP projects
     network = local.network
+
     access_config {
     }
   }
-  
+
   tags = ["web"]
 
   provisioner "remote-exec" {
@@ -69,6 +76,7 @@ resource "google_compute_firewall" "web" {
     environment = {
       "LANG" = "en_US.UTF-8"
     }
+
     command = "ansible-playbook -i ${self.network_interface[0].access_config[0].nat_ip}, --private-key ${local.private_key_path} playbook.yaml"
   }
 }

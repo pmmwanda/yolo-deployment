@@ -12,5 +12,10 @@ terraform {
       source  = "integrations/github"
       version = "5.25.1"
     }
+    harness = {
+      source = "harness/harness"
+      version = "0.22.1"
+   
+  }
   }
 }

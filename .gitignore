@@ -1,4 +1,4 @@
 .terraform/
 /terraform.tfstate
 /terraform.tfstate.backup
-credentials.json
+/yolo-client-8d5712236805.json
