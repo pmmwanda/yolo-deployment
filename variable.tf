@@ -21,7 +21,7 @@ variable "project_id" {
   default = "yolo-client"
 }
 
-variable "organization_developers" {
-  type    = list(string)
-  default = [""]
-}
+# variable "organization_developers" {
+#   type    = list(string)
+#   default = [""]
+# }
