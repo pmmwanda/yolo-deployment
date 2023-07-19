@@ -3,8 +3,8 @@
   become: true
   vars:
   
-    client_image: rwambui/yolo-client:1.0.0
-    backend_image: rwambui/yolo-backend:1.0.0
+    client_image: aobwoge/yolo-client:1.0.0
+    backend_image: aobwoge/yolo-backend:1.0.0
     app_folder: /opt/yolo
 
   tasks:
