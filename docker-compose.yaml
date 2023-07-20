@@ -1,8 +1,8 @@
 version: "3"
 services:
   client:
-    container_name: yolo-client
-    image: rwambui/yolo-client:1.0.0
+    container_name: yolo-web
+    image: pmmwanda/client:1.0.0
     ports:
      - 3000:80
     depends_on:
@@ -12,8 +12,8 @@ services:
 
      
   backend:
-    container_name: yolo-backend
-    image: rwambui/yolo-backend:1.0.0
+    container_name: yolo-api
+    image: pmmwanda/backend:1.0.0
     ports:
       - 5000:5000
   

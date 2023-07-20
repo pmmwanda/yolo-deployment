@@ -2,8 +2,8 @@ variable "docker_images" {
   type        = list(string)
   description = "These are the images in my environment"
   default     = [
-    "rwambui/yolo-client:1.0.0",
-    "rwambui/yolo-backend:1.0.0",
+    "pmmwanda/yolo-client:1.0.0",
+    "pmmwanda/yolo-backend:1.0.0",
   ]
 }
 

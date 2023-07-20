@@ -3,14 +3,14 @@
   become: true
   vars:
   
-    client_image: aobwoge/yolo-client:1.0.0
-    backend_image: aobwoge/yolo-backend:1.0.0
+    client_image: pmmwanda/yolo-client:1.0.0
+    backend_image: pmmwanda/yolo-backend:1.0.0
     app_folder: /opt/yolo
 
   tasks:
     - name: Clone the repository
       git:
-        repo: https://github.com/nobwoge/Yolo-deployment.git
+        repo: https://github.com/pmmwanda/Yolo-deployment.git
         dest: /opt/yolo
 
     - name: Install npm
